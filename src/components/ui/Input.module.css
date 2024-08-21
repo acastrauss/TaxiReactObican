@@ -1,0 +1,35 @@
+.input__container {
+	margin-bottom: 1em;
+	display: flex;
+	flex-direction: column;
+}
+
+.label {
+	margin-bottom: 0.5em;
+	font-size: 16px;
+	color: #4b3823;
+}
+
+.input {
+	background-color: #fff;
+	color: #4b3823;
+	font-size: 16px;
+	padding: 10px 10px 14px 10px;
+	border: 1px solid #757575;
+	border-radius: 4px;
+	width: 250px;
+	box-sizing: border-box;
+}
+
+.input:focus {
+	outline: none;
+	border: 1px solid #757575;
+}
+
+.invalid {
+	border: 2px solid rgb(226, 55, 25);
+}
+
+.date__padding {
+	padding-left: 90px;
+}

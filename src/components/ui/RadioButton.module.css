@@ -1,0 +1,23 @@
+.root{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-bottom: 15px;
+}
+
+.radioButtonLabel{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 10px;
+    margin-right: 20px;
+    font: inherit;
+    color: #42321c;
+}
+
+.radioButton{
+    width: 20px;
+    height: 20px;
+    accent-color: #c69550;
+}

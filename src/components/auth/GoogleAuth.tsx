@@ -1,0 +1,30 @@
+import { useGoogleLogin } from "@react-oauth/google";
+import { IconBrandGoogle } from "@tabler/icons-react";
+import { FC } from "react";
+import styles from "./GoogleAuth.module.css";
+import { GoogleAuthServiceType } from "../../Services/Google/GoogleAuth";
+import { GoogleUserInfo } from "../../models/Auth/Google/GoogleUserInfo";
+
+
+interface IProps{
+    googleAuthService: GoogleAuthServiceType;
+    setUserInfo: (userInfo: GoogleUserInfo) => void;
+}
+
+export const GoogleAuth: FC<IProps> = (props) => {
+    
+    const login = useGoogleLogin({
+        onSuccess: async (tokenResponse) => {
+            const res = await props.googleAuthService.GetUserInfo(tokenResponse.access_token);
+            if(!res){
+                alert('Error while authenticating with google');
+                return;
+            }
+            props.setUserInfo(res);
+        },
+        onError: (error) => console.error(error)
+    });
+
+
+    return <IconBrandGoogle className={styles.icon} size={44} onClick={() => login()}/>
+}

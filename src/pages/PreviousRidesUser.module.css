@@ -1,0 +1,26 @@
+.tableContainer {
+	margin: 20px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	overflow: hidden;
+}
+
+.table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+.headerCell,
+.dataCell {
+	padding: 10px;
+	text-align: left;
+	border-bottom: 1px solid #ddd;
+}
+
+.headerCell {
+	background-color: #f4f4f4;
+}
+
+.row:hover {
+	background-color: #f1f1f1;
+}
