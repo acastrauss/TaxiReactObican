@@ -38,10 +38,19 @@ async function Register(registerData: RegisterData) {
 
 async function UpdateProfile(updateData: UpdateUserProfileRequest) {
 	const jtwToken = JWTStorage.getJWT();
+
+	let dataToSend = updateData;
+	if(updateData.password){
+		dataToSend = {
+			...dataToSend,
+			password: sha256(updateData.password).toString()
+		} as UpdateUserProfileRequest
+	}
+	
 	try {
 		const res = await axios.patch(
 			`${AUTH_CONTROLLER_URL}/update-profile`,
-			updateData,
+			dataToSend,
 			{
 				headers: {
 					Authorization: `Bearer ${jtwToken?.token}`,
