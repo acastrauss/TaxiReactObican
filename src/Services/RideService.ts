@@ -22,7 +22,6 @@ async function NewRide(estimateRide: EstimateRide) {
 				},
 			}
 		);
-		console.log(res);
 		return res;
 	} catch {
 		return null;

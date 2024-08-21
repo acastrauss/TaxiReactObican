@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState } from 'react';
+import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { RegisterData } from '../models/Auth/RegisterData';
 import { UserType } from '../models/Auth/UserType';
 import styles from './RegisterPage.module.css';
@@ -63,12 +63,10 @@ export const RegisterPage: FC<IProps> = (props) => {
 		if (e.target.files && e.target.files.length > 0) {
 			setLocalImageName(e.target.files[0].name);
 			setLocalImagePath(e.target.files[0]);
-			console.log(e.target.files[0]);
 		}
 	};
 
-	console.log(localImagePath);
-	console.log(typeof localImagePath);
+	useEffect(() => {}, [localImagePath]);
 
 	async function onRegister() {
 		if (!isValid() || !localImagePath || !localImageName) {
@@ -100,10 +98,6 @@ export const RegisterPage: FC<IProps> = (props) => {
 		formData.append('fileName', localImageName);
 		const hashedEmail = SHA256(registerFormData.Email).toString();
 
-		console.log(formData);
-		console.log(file);
-		console.log(localImageName);
-		console.log(hashedEmail);
 		const uploadImgRes = await props.blobService.UploadProfileImage(
 			formData,
 			hashedEmail
@@ -149,8 +143,6 @@ export const RegisterPage: FC<IProps> = (props) => {
 		const day = String(date.getDate()).padStart(2, '0');
 		return `${year}-${month}-${day}`;
 	}
-
-	console.log(registerFormData.DateOfBirth);
 
 	return (
 		<div className={styles.form}>
@@ -324,7 +316,7 @@ export const RegisterPage: FC<IProps> = (props) => {
 				<GoogleAuth
 					googleAuthService={GoogleAuthService}
 					setUserInfo={(userInfo) => {
-						console.log(userInfo);
+						console.log(userInfo.picture);
 						setRegisterFormData({
 							...registerFormData,
 							Password: undefined,

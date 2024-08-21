@@ -40,8 +40,6 @@ export const LoginPage: FC<IProps> = (props) => {
 			return;
 		}
 
-		console.log(loginFormData);
-
 		const res = await props.authService.Login(loginFormData);
 
 		if (!res) {

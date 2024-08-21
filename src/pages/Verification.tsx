@@ -56,7 +56,6 @@ const Verification: FC<IProps> = (props) => {
 			const response = await props.driverService.UpdateDriverStatus(
 				request
 			);
-			console.log('API response:', response);
 
 			if (response && response.status === 200) {
 				alert(

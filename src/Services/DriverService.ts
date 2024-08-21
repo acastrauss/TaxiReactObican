@@ -17,7 +17,6 @@ async function RateDriver(driverRating: DriverRating) {
 				},
 			}
 		);
-		console.log(res);
 		return res;
 	} catch {
 		return null;
@@ -32,7 +31,6 @@ async function GetAllDrivers() {
 				Authorization: `Bearer ${jtwToken?.token}`,
 			},
 		});
-		console.log(res);
 		return res.data;
 	} catch {
 		return null;
@@ -53,7 +51,6 @@ async function GetDriverStatus(email: string) {
 				},
 			}
 		);
-		console.log(res);
 		return res.data;
 	} catch {
 		return null;
@@ -74,7 +71,6 @@ async function GetDriverRating(email: string) {
 				},
 			}
 		);
-		console.log(res);
 		return res.data;
 	} catch {
 		return null;
@@ -93,7 +89,6 @@ async function UpdateDriverStatus(driverStatus: UpdateDriverStatusData) {
 				},
 			}
 		);
-		console.log(res);
 		return res;
 	} catch {
 		return null;
