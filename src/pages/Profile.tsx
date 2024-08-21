@@ -151,6 +151,7 @@ const ProfilePage: FC<IProps> = (props) => {
 			</div>
 			<div className={styles.formGroup}>
 				<input
+					readOnly={true}
 					placeholder='Email'
 					value={formData.email}
 					type='email'
@@ -202,6 +203,7 @@ const ProfilePage: FC<IProps> = (props) => {
 			<div className={styles.formGroup}>
 				<label htmlFor='userType'>Tip korisnika</label>
 				<select
+					disabled={true}
 					id='userType'
 					name='type'
 					value={formData.type}
