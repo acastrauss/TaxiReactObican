@@ -1,6 +1,8 @@
-.dashboardContainer {
+.dashboardWrapper {
 	display: flex;
 	width: 100%;
+	min-height: 100vh;
+	background-color: #e9ecef;
 }
 
 .sidebar {
@@ -9,47 +11,59 @@
 	color: white;
 	display: flex;
 	flex-direction: column;
-}
-
-.sidebarHeader {
 	padding: 20px;
-	text-align: center;
-	background-color: #007bff;
+	box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .sidebarMenu {
 	list-style-type: none;
 	padding: 0;
+	margin: 20px 0 0 0;
 }
 
-.dashboardLink {
+.sidebarMenuItem {
+	margin-bottom: 10px;
+}
+
+.sidebarLink {
 	color: white;
 	display: block;
 	text-decoration: none;
-	padding: 15px 20px;
+	padding: 15px;
+	border-radius: 4px;
+	transition: background-color 0.3s, color 0.3s;
 }
 
-.sidebarMenu li:hover {
-	background-color: #007bff;
+.sidebarMenuItem:hover .sidebarLink {
+	background-color: #c0392b;
+	color: #ffffff;
 }
 
 .mainContent {
 	flex: 1;
 	display: flex;
 	flex-direction: column;
+	padding: 20px;
+	background-color: #ffffff;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	margin-left: 20px;
 }
 
-.topbar {
+.topBar {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	padding: 20px;
-	background-color: #f8f9fa;
-	border-bottom: 1px solid #dee2e6;
+	background-color: #343a40;
+	color: white;
+	border-bottom: 2px solid #e74c3c;
+	border-radius: 8px;
 }
 
-.topbar h1 {
+.topBarTitle {
 	margin: 0;
+	font-size: 1.8em;
 }
 
 .userInfo {
@@ -57,6 +71,23 @@
 	align-items: center;
 }
 
-.userInfo p {
-	margin: 0 10px 0 0;
+.userStatus {
+	margin-right: 20px;
+	color: #ffc107;
+	font-weight: bold;
+}
+
+.logoutButton {
+	background-color: #e74c3c;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background-color 0.3s, transform 0.3s;
+}
+
+.logoutButton:hover {
+	background-color: #c0392b;
+	transform: translateY(-2px);
 }

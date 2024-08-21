@@ -1,19 +1,15 @@
 import { ChangeEvent, FC, useState } from 'react';
 import { RegisterData } from '../models/Auth/RegisterData';
-import { Input } from '../components/ui/Input';
-import { RadioButtonInput } from '../components/ui/RadioButton';
 import { UserType } from '../models/Auth/UserType';
 import styles from './RegisterPage.module.css';
-import { Button } from '../components/ui/Button';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '../utils/Regex';
 import { AuthServiceType } from '../Services/AuthService';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { RoutesNames } from '../Router/Routes';
 import { BlobServiceType } from '../Services/BlobService';
 import { SHA256 } from 'crypto-js';
 import { GoogleAuth } from '../components/auth/GoogleAuth';
 import { GoogleAuthService } from '../Services/Google/GoogleAuth';
-import { useGoogleOAuth } from '@react-oauth/google';
 
 interface IProps {
 	authService: AuthServiceType;
@@ -164,6 +160,7 @@ export const RegisterPage: FC<IProps> = (props) => {
 				name='image'
 				accept='image/*'
 				onChange={handleImageChange}
+				className={styles.input}
 			/>
 
 			{localImagePath && (
@@ -180,9 +177,12 @@ export const RegisterPage: FC<IProps> = (props) => {
 				</div>
 			)}
 
-			<Input
-				isValid={registerFormValid.Username}
-				onChangeText={(val) => {
+			<input
+				className={`${styles.input} ${
+					registerFormValid.Username ? '' : styles.invalid
+				}`}
+				onChange={(e) => {
+					const val = e.target.value;
 					setRegisterFormData({ ...registerFormData, Username: val });
 					setRegisterFormValid({
 						...registerFormValid,
@@ -190,13 +190,16 @@ export const RegisterPage: FC<IProps> = (props) => {
 					});
 				}}
 				placeholder='Username:'
-				textValue={registerFormData.Username}
+				value={registerFormData.Username}
 				type='text'
 			/>
 
-			<Input
-				isValid={registerFormValid.Email}
-				onChangeText={(val) => {
+			<input
+				className={`${styles.input} ${
+					registerFormValid.Email ? '' : styles.invalid
+				}`}
+				onChange={(e) => {
+					const val = e.target.value;
 					setRegisterFormData({ ...registerFormData, Email: val });
 					setRegisterFormValid({
 						...registerFormValid,
@@ -204,14 +207,17 @@ export const RegisterPage: FC<IProps> = (props) => {
 					});
 				}}
 				placeholder='Email:'
-				textValue={registerFormData.Email}
+				value={registerFormData.Email}
 				type='text'
 			/>
 
 			{!usedGoogleAuth && (
-				<Input
-					isValid={registerFormValid.Password}
-					onChangeText={(val) => {
+				<input
+					className={`${styles.input} ${
+						registerFormValid.Password ? '' : styles.invalid
+					}`}
+					onChange={(e) => {
+						const val = e.target.value;
 						setRegisterFormData({
 							...registerFormData,
 							Password: val,
@@ -222,14 +228,17 @@ export const RegisterPage: FC<IProps> = (props) => {
 						});
 					}}
 					placeholder='Password:'
-					textValue={registerFormData.Password ?? ''}
+					value={registerFormData.Password ?? ''}
 					type='password'
 				/>
 			)}
 
-			<Input
-				isValid={registerFormValid.FullName}
-				onChangeText={(val) => {
+			<input
+				className={`${styles.input} ${
+					registerFormValid.FullName ? '' : styles.invalid
+				}`}
+				onChange={(e) => {
+					const val = e.target.value;
 					setRegisterFormData({ ...registerFormData, FullName: val });
 					setRegisterFormValid({
 						...registerFormValid,
@@ -237,26 +246,32 @@ export const RegisterPage: FC<IProps> = (props) => {
 					});
 				}}
 				placeholder='Full Name:'
-				textValue={registerFormData.FullName}
+				value={registerFormData.FullName}
 				type='text'
 			/>
 
-			<Input
-				isValid={registerFormValid.DateOfBirth}
-				onChangeText={(val) => {
+			<input
+				className={`${styles.input} ${
+					registerFormValid.DateOfBirth ? '' : styles.invalid
+				}`}
+				onChange={(e) => {
+					const val = e.target.value;
 					setRegisterFormData({
 						...registerFormData,
 						DateOfBirth: val,
 					});
 				}}
 				placeholder='Date of Birth:'
-				textValue={formatDateForInput(registerFormData.DateOfBirth)}
+				value={formatDateForInput(registerFormData.DateOfBirth)}
 				type='date'
 			/>
 
-			<Input
-				isValid={registerFormValid.Address}
-				onChangeText={(val) => {
+			<input
+				className={`${styles.input} ${
+					registerFormValid.Address ? '' : styles.invalid
+				}`}
+				onChange={(e) => {
+					const val = e.target.value;
 					setRegisterFormData({ ...registerFormData, Address: val });
 					setRegisterFormValid({
 						...registerFormValid,
@@ -264,21 +279,45 @@ export const RegisterPage: FC<IProps> = (props) => {
 					});
 				}}
 				placeholder='Address:'
-				textValue={registerFormData.Address}
+				value={registerFormData.Address}
 				type='text'
 			/>
 
 			{!usedGoogleAuth && (
-				<RadioButtonInput
-					selectedValue={UserType[registerFormData.Type]}
-					setSelectedValue={(val) => {
-						setRegisterFormData({
-							...registerFormData,
-							Type: UserType[val as keyof typeof UserType],
-						});
-					}}
-					values={[UserType[1], UserType[2]]}
-				/>
+				<div className={styles.radioGroup}>
+					<label>
+						<input
+							type='radio'
+							name='userType'
+							value={UserType.Client}
+							checked={registerFormData.Type === UserType.Client}
+							onChange={() =>
+								setRegisterFormData({
+									...registerFormData,
+									Type: UserType.Client,
+								})
+							}
+							className={styles.radioButton}
+						/>
+						Client
+					</label>
+					<label>
+						<input
+							type='radio'
+							name='userType'
+							value={UserType.Driver}
+							checked={registerFormData.Type === UserType.Driver}
+							onChange={() =>
+								setRegisterFormData({
+									...registerFormData,
+									Type: UserType.Driver,
+								})
+							}
+							className={styles.radioButton}
+						/>
+						Driver
+					</label>
+				</div>
 			)}
 
 			<div>
@@ -312,10 +351,12 @@ export const RegisterPage: FC<IProps> = (props) => {
 					}}
 				/>
 			</div>
-
-			<a href='Login'>Already have an account? Log In</a>
-
-			<Button text='Register' onClick={onRegister} />
+			<Link to='/Login' className={styles.link}>
+				Already have an account? Log In
+			</Link>
+			<button className={styles.button} onClick={onRegister}>
+				Register
+			</button>
 		</div>
 	);
 };

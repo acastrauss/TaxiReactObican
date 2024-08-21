@@ -1,7 +1,6 @@
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
 import styles from './Profile.module.css';
 import { UserType } from '../models/Auth/UserType';
-import { Input } from '../components/ui/Input';
 import { Profile, UpdateUserProfileRequest } from '../models/Auth/Profile';
 import { AuthServiceType } from '../Services/AuthService';
 import { BlobServiceType } from '../Services/BlobService';
@@ -118,106 +117,99 @@ const ProfilePage: FC<IProps> = (props) => {
 	};
 
 	function formatDateForInput(dateString: string) {
+		if (!dateString) return getDefaultDate(); // Ako je datum prazan, vrati default datum
+
 		const date = new Date(dateString);
+
+		if (isNaN(date.getTime()) || date.getFullYear() < 1000) {
+			return getDefaultDate(); // Ako je datum nevalidan, vrati default datum
+		}
+
 		const year = date.getFullYear();
 		const month = String(date.getMonth() + 1).padStart(2, '0');
 		const day = String(date.getDate()).padStart(2, '0');
+		console.log(`${year}-${month}-${day}`);
 		return `${year}-${month}-${day}`;
+	}
+
+	function getDefaultDate() {
+		const today = new Date();
+		const year = today.getFullYear();
+		const month = String(today.getMonth() + 1).padStart(2, '0');
+		const day = String(today.getDate()).padStart(2, '0');
+		return `${year}-${month}-${day}`; // Vraća današnji datum u formatu YYYY-MM-DD
 	}
 
 	return (
 		<form className={styles.form} onSubmit={handleSubmit}>
 			<div className={styles.formGroup}>
-				<Input
+				<input
 					placeholder='Username'
-					textValue={formData.username}
+					value={formData.username}
 					type='text'
-					onChangeText={(val) => {
-						setFormData({
-							...formData,
-							username: val,
-						});
-					}}
-					isValid={true}
+					name='username'
+					onChange={handleChange}
+					className={styles.input}
 				/>
 			</div>
 			<div className={styles.formGroup}>
-				<Input
+				<input
 					placeholder='Email'
-					textValue={formData.email}
+					value={formData.email}
 					type='email'
-					onChangeText={(val) => {
-						setFormData({
-							...formData,
-							email: val,
-						});
-					}}
-					isValid={true}
+					name='email'
+					onChange={handleChange}
+					className={styles.input}
 				/>
 			</div>
 			<div className={styles.formGroup}>
-				<Input
+				<input
 					placeholder='Password'
-					textValue={formData.password}
+					value={formData.password}
 					type='password'
-					onChangeText={(val) => {
-						setFormData({
-							...formData,
-							password: val,
-						});
-					}}
-					isValid={true}
+					name='password'
+					onChange={handleChange}
+					className={styles.input}
 				/>
 			</div>
 			<div className={styles.formGroup}>
-				<Input
+				<input
 					placeholder='Full Name'
-					textValue={formData.fullname}
+					value={formData.fullname}
 					type='text'
-					onChangeText={(val) => {
-						setFormData({
-							...formData,
-							fullname: val,
-						});
-					}}
-					isValid={true}
+					name='fullname'
+					onChange={handleChange}
+					className={styles.input}
 				/>
 			</div>
 			<div className={styles.formGroup}>
-				<Input
+				<input
 					placeholder='Birth Date'
-					textValue={formatDateForInput(formData.dateOfBirth)}
+					value={formatDateForInput(formData.dateOfBirth)}
 					type='date'
-					onChangeText={(val) => {
-						setFormData({
-							...formData,
-							dateOfBirth: val,
-						});
-					}}
-					isValid={true}
+					name='dateOfBirth'
+					onChange={handleChange}
+					className={styles.input}
 				/>
 			</div>
 			<div className={styles.formGroup}>
-				<Input
+				<input
 					placeholder='Address'
-					textValue={formData.address}
+					value={formData.address}
 					type='text'
-					onChangeText={(val) => {
-						setFormData({
-							...formData,
-							address: val,
-						});
-					}}
-					isValid={true}
+					name='address'
+					onChange={handleChange}
+					className={styles.input}
 				/>
 			</div>
 			<div className={styles.formGroup}>
 				<label htmlFor='userType'>Tip korisnika</label>
 				<select
 					id='userType'
-					name='userType'
+					name='type'
 					value={formData.type}
 					onChange={handleChange}
+					className={styles.select}
 				>
 					<option value={UserType.Admin}>Administrator</option>
 					<option value={UserType.Client}>User</option>
@@ -232,6 +224,7 @@ const ProfilePage: FC<IProps> = (props) => {
 					name='image'
 					accept='image/*'
 					onChange={handleImageChange}
+					className={styles.input}
 				/>
 			</div>
 			{formData.imagePath && (

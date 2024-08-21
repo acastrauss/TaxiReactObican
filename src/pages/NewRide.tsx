@@ -1,6 +1,5 @@
 import { FC, useState, useEffect } from 'react';
 import styles from './NewRide.module.css';
-import { Input } from '../components/ui/Input';
 import Modal from '../components/ui/Modal';
 import {
 	CreateRide,
@@ -15,7 +14,6 @@ import {
 import { RideServiceType } from '../Services/RideService';
 import Rating from '../components/ui/Rating';
 import { DriverServiceType } from '../Services/DriverService';
-import Chat from './Chat';
 
 interface IProps {
 	rideService: RideServiceType;
@@ -229,31 +227,31 @@ const NewRide: FC<IProps> = (props) => {
 			<div className={styles.container}>
 				<h2 className={styles.heading}>Create a new Ride</h2>
 				<div className={styles.formGroup}>
-					<Input
+					<input
 						placeholder='Start Address'
-						textValue={formData.StartAddress}
+						value={formData.StartAddress}
 						type='text'
-						onChangeText={(val) => {
+						onChange={(e) => {
 							setFormData((prevState) => ({
 								...prevState,
-								StartAddress: val,
+								StartAddress: e.target.value,
 							}));
 						}}
-						isValid={true}
+						className={styles.input}
 					/>
 				</div>
 				<div className={styles.formGroup}>
-					<Input
+					<input
 						placeholder='End Address'
-						textValue={formData.EndAddress}
+						value={formData.EndAddress}
 						type='text'
-						onChangeText={(val) => {
+						onChange={(e) => {
 							setFormData((prevState) => ({
 								...prevState,
-								EndAddress: val,
+								EndAddress: e.target.value,
 							}));
 						}}
-						isValid={true}
+						className={styles.input}
 					/>
 				</div>
 				<button
@@ -289,18 +287,20 @@ const NewRide: FC<IProps> = (props) => {
 							Countdown to end of ride: {formatTime(rideDuration)}
 						</p>
 					)}
-					<button onClick={toggleModal} disabled={isRideActive}>
+					<button
+						className={styles.buttonModal}
+						onClick={toggleModal}
+						disabled={isRideActive}
+					>
 						Close
 					</button>
 					<button
 						onClick={handleNewRideClick}
 						disabled={isRideActive}
+						className={styles.buttonModal}
 					>
 						Accept ride
 					</button>
-					{acceptedRide && (
-						<Chat ride={acceptedRide} isClient={true} />
-					)}
 				</Modal>
 			)}
 			{isRatingOpen && (

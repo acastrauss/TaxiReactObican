@@ -1,8 +1,10 @@
 .tableContainer {
 	margin: 20px;
 	border: 1px solid #ddd;
-	border-radius: 5px;
+	border-radius: 8px;
 	overflow: hidden;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	background-color: #fff;
 }
 
 .table {
@@ -12,15 +14,26 @@
 
 .headerCell,
 .dataCell {
-	padding: 10px;
+	padding: 15px;
 	text-align: left;
 	border-bottom: 1px solid #ddd;
+	font-size: 14px;
 }
 
 .headerCell {
-	background-color: #f4f4f4;
+	background-color: #e74c3c;
+	color: white;
+	font-weight: bold;
 }
 
-.row:hover {
+.dataCell {
+	background-color: #fafafa;
+}
+
+.row:nth-child(even) .dataCell {
+	background-color: #f9f9f9;
+}
+
+.row:hover .dataCell {
 	background-color: #f1f1f1;
 }

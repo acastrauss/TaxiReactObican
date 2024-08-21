@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import styles from './NewRidesDriver.module.css';
+import styles from './Verification.module.css';
 
 import { DriverServiceType } from '../Services/DriverService';
 import { Driver, DriverStatus, UpdateDriverStatusData } from '../models/Driver';
@@ -112,17 +112,24 @@ const Verification: FC<IProps> = (props) => {
 									DriverStatus.NOT_VERIFIED && (
 									<button
 										onClick={() => handleVerify(driver)}
+										className={styles.actionButton}
 									>
 										Verify
 									</button>
 								)}
 								{driver.status === DriverStatus.VERIFIED && (
-									<button onClick={() => handleBan(driver)}>
+									<button
+										onClick={() => handleBan(driver)}
+										className={styles.actionButton}
+									>
 										Ban
 									</button>
 								)}
 								{driver.status === DriverStatus.BANNED && (
-									<button onClick={() => handleUnban(driver)}>
+									<button
+										onClick={() => handleUnban(driver)}
+										className={styles.actionButton}
+									>
 										Unban
 									</button>
 								)}

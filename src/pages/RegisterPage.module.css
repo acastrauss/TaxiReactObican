@@ -1,8 +1,81 @@
-.form{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	max-width: 500px;
+	margin: 0 auto;
+	padding: 20px;
+	background-color: #f9f9f9;
+	border-radius: 8px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
 
-    margin-top: 50px;
+.input {
+	width: 100%;
+	padding: 12px;
+	margin: 8px 0;
+	border: 2px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	font-size: 16px;
+	transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.input:focus {
+	border-color: #4a90e2;
+	box-shadow: 0 0 8px rgba(74, 144, 226, 0.5);
+	outline: none;
+}
+
+.invalid {
+	border-color: #e74c3c;
+}
+
+.radioGroup {
+	display: flex;
+	justify-content: space-around;
+	width: 100%;
+	margin: 16px 0;
+}
+
+.radioButton {
+	margin-right: 8px;
+}
+
+.button {
+	background: #e74c3c;
+	border: none;
+	font-family: Arial, sans-serif;
+	font-weight: bold;
+	border-radius: 8px;
+	line-height: 1.2;
+	margin: 1em;
+	padding: 12px 24px;
+	height: 55px;
+	width: 160px;
+	color: #ffffff;
+	-webkit-transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+	transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+	cursor: pointer;
+}
+
+.button:hover,
+.button:focus {
+	background-color: #c0392b;
+	color: #ffffff;
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+	transform: translateY(-3px);
+}
+
+.link {
+	color: #e74c3c;
+	text-decoration: none;
+	font-weight: bold;
+	transition: color 0.3s, text-shadow 0.3s;
+}
+
+.link:hover,
+.link:focus {
+	color: #c0392b;
+	text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }

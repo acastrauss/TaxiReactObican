@@ -10,7 +10,6 @@ import Modal from '../components/ui/Modal';
 import { DriverStatus } from '../models/Driver';
 import { DriverServiceType } from '../Services/DriverService';
 import { JWTStorageType } from '../Services/JWTStorage';
-import Chat from './Chat';
 
 interface IProps {
 	rideService: RideServiceType;
@@ -29,7 +28,9 @@ const NewRidesDriver: FC<IProps> = (props) => {
 	const [userRole, setUserRole] = useState('');
 	const [userMail, setUserMail] = useState('');
 
-	const [acceptedRide, setAcceptedRide] = useState<CreateRideResponse|null>(null);
+	const [acceptedRide, setAcceptedRide] = useState<CreateRideResponse | null>(
+		null
+	);
 
 	const arrivalTimeRef = useRef<number | null>(null);
 	const rideDurationRef = useRef<number | null>(null);
@@ -91,7 +92,7 @@ const NewRidesDriver: FC<IProps> = (props) => {
 			);
 			if (response !== null) {
 				const acceptedRideRes = response.data as CreateRideResponse;
-				if(acceptedRideRes !== null){
+				if (acceptedRideRes !== null) {
 					setAcceptedRide(acceptedRideRes);
 				}
 
@@ -214,6 +215,7 @@ const NewRidesDriver: FC<IProps> = (props) => {
 											DriverStatus.NOT_VERIFIED
 									}
 									type='button'
+									className={styles.actionButton}
 								>
 									Accept
 								</button>
@@ -239,7 +241,6 @@ const NewRidesDriver: FC<IProps> = (props) => {
 				{rideDuration !== null && (
 					<p>Countdown to end of ride: {formatTime(rideDuration)}</p>
 				)}
-				{ acceptedRide && <Chat ride={acceptedRide} isClient={false}/>}
 			</Modal>
 		</div>
 	);

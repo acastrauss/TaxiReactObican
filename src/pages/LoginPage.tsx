@@ -1,13 +1,11 @@
 import { FC, useEffect, useState } from 'react';
 import { AuthType, LoginData } from '../models/Auth/LoginData';
 import styles from './LoginPage.module.css';
-import { Input } from '../components/ui/Input';
 import { EMAIL_REGEX, PASSWORD_REGEX } from '../utils/Regex';
-import { Button } from '../components/ui/Button';
 import { AuthServiceType } from '../Services/AuthService';
 import { JWT } from '../models/Auth/JWT';
 import { JWTStorageType } from '../Services/JWTStorage';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { GoogleAuth } from '../components/auth/GoogleAuth';
 import { GoogleAuthService } from '../Services/Google/GoogleAuth';
 
@@ -66,9 +64,12 @@ export const LoginPage: FC<IProps> = (props) => {
 
 	return (
 		<div className={styles.form}>
-			<Input
-				isValid={loginFormValid.Email}
-				onChangeText={(val) => {
+			<input
+				className={`${styles.input} ${
+					loginFormValid.Email ? '' : styles.invalid
+				}`}
+				onChange={(e) => {
+					const val = e.target.value;
 					setLoginFormData({ ...loginFormData, Email: val });
 					setLoginFormValid({
 						...loginFormValid,
@@ -76,14 +77,17 @@ export const LoginPage: FC<IProps> = (props) => {
 					});
 				}}
 				placeholder='Email:'
-				textValue={loginFormData.Email}
+				value={loginFormData.Email}
 				type='text'
 			/>
 
 			{loginFormData.authType === AuthType.TRADITIONAL && (
-				<Input
-					isValid={loginFormValid.Password}
-					onChangeText={(val) => {
+				<input
+					className={`${styles.input} ${
+						loginFormValid.Password ? '' : styles.invalid
+					}`}
+					onChange={(e) => {
+						const val = e.target.value;
 						setLoginFormData({ ...loginFormData, Password: val });
 						setLoginFormValid({
 							...loginFormValid,
@@ -91,7 +95,7 @@ export const LoginPage: FC<IProps> = (props) => {
 						});
 					}}
 					placeholder='Password:'
-					textValue={loginFormData.Password ?? ''}
+					value={loginFormData.Password ?? ''}
 					type='password'
 				/>
 			)}
@@ -113,9 +117,12 @@ export const LoginPage: FC<IProps> = (props) => {
 					}}
 				/>
 			</div>
-			<a href='Register'>New here? Register</a>
-
-			<Button text='Login' onClick={onLogin} />
+			<Link to='/register' className={styles.link}>
+				Don't have an account? Register here!
+			</Link>
+			<button className={styles.button} onClick={onLogin}>
+				Login
+			</button>
 		</div>
 	);
 };
