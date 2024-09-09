@@ -138,7 +138,7 @@ const NewRidesDriver: FC<IProps> = (props) => {
 					rideDurationRef.current -= 1;
 					setRideDuration(rideDurationRef.current);
 				}
-			}, 1000);
+			}, 200);
 		}
 
 		return () => {

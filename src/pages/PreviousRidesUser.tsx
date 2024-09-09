@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import styles from './PreviousRidesUser.module.css';
 import { RideServiceType } from '../Services/RideService';
-import { CreateRideResponse } from '../models/Ride';
+import { CreateRideResponse, RideStatus } from '../models/Ride';
 
 interface IProps {
 	rideService: RideServiceType;
@@ -19,6 +19,20 @@ const NewRidesDriver: FC<IProps> = (props) => {
 		};
 		fetchRides();
 	}, [props.rideService]);
+
+	// Helper function to map status numbers to status strings
+	const getStatusString = (status: number): string => {
+		switch (status) {
+			case RideStatus.CREATED:
+				return 'Created';
+			case RideStatus.ACCEPTED:
+				return 'Accepted';
+			case RideStatus.COMPLETED:
+				return 'Completed';
+			default:
+				return 'Unknown';
+		}
+	};
 
 	return (
 		<div className={styles.tableContainer}>
@@ -55,7 +69,9 @@ const NewRidesDriver: FC<IProps> = (props) => {
 							<td className={styles.dataCell}>
 								{ride.driverEmail ? ride.driverEmail : 'N/A'}
 							</td>
-							<td className={styles.dataCell}>{ride.status}</td>
+							<td className={styles.dataCell}>
+								{getStatusString(ride.status)}
+							</td>
 							<td className={styles.dataCell}>{ride.price}</td>
 						</tr>
 					))}

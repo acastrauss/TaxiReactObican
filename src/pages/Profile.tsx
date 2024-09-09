@@ -111,11 +111,18 @@ const ProfilePage: FC<IProps> = (props) => {
 			updatedData.imagePath = uploadImgRes;
 		}
 
-		await props.authService.UpdateProfile(updatedData);
+		try {
+			await props.authService.UpdateProfile(updatedData);
+			alert('Profile successfully updated!');
+		} catch (error) {
+			console.error('Failed to update profile:', error);
+			alert('Failed to update profile, please try again.');
+		}
 	};
 
 	function formatDateForInput(dateString: string) {
-		if (!dateString) return getDefaultDate(); // Ako je datum prazan, vrati default datum
+		console.log(dateString);
+		if (!dateString) return getDefaultDate();
 
 		const date = new Date(dateString);
 

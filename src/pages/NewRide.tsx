@@ -135,15 +135,15 @@ const NewRide: FC<IProps> = (props) => {
 													? prevTime - 1
 													: 0
 											);
-										}, 1000);
+										}, 200); // 0.2 sekunde
 									}
 									return 0;
 								}
 							});
-						}, 1000);
+						}, 200); // 0.2 sekunde
 					}
 				}
-			}, 5000);
+			}, 2000);
 
 			return () => clearInterval(interval);
 		}

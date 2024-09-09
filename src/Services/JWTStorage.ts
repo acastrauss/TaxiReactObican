@@ -1,14 +1,14 @@
 import { CustomJwtPayload, JWT } from '../models/Auth/JWT';
 import { jwtDecode } from 'jwt-decode';
 
-const LOCAL_STORAGE_KEY = 'jwt_token';
+const SESSION_STORAGE_KEY = 'jwt_token';
 
 function setJWT(jwt: JWT) {
-	localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(jwt));
+	sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(jwt));
 }
 
 function getJWT() {
-	const jwtObj = localStorage.getItem(LOCAL_STORAGE_KEY);
+	const jwtObj = sessionStorage.getItem(SESSION_STORAGE_KEY);
 	if (!jwtObj) {
 		return null;
 	}
@@ -17,7 +17,7 @@ function getJWT() {
 }
 
 function removeJWT() {
-	localStorage.removeItem(LOCAL_STORAGE_KEY);
+	sessionStorage.removeItem(SESSION_STORAGE_KEY);
 }
 
 function decodeJWT(token: string): CustomJwtPayload | null {
