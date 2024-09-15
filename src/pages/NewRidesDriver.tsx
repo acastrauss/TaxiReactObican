@@ -107,13 +107,14 @@ const NewRidesDriver: FC<IProps> = (props) => {
 				setRideDuration(duration);
 				arrivalTimeRef.current = arrival;
 				rideDurationRef.current = duration;
+				setIsRideActive(true);
+				setModalOpen(true);		
 			}
 			const updatedData = await props.rideService.GetNewRides();
 			if (updatedData) {
 				setRideData(updatedData);
 			}
-			setIsRideActive(true);
-			setModalOpen(true);
+
 		} catch (error) {
 			console.error('Failed to accept ride:', error);
 			alert('Failed to accept ride.');
@@ -138,7 +139,7 @@ const NewRidesDriver: FC<IProps> = (props) => {
 					rideDurationRef.current -= 1;
 					setRideDuration(rideDurationRef.current);
 				}
-			}, 200);
+			}, 100);
 		}
 
 		return () => {
@@ -147,7 +148,7 @@ const NewRidesDriver: FC<IProps> = (props) => {
 	}, [isRideActive]);
 
 	useEffect(() => {
-		if (rideDuration === 0) {
+		if (rideDuration && rideDuration <= 0) {
 			setIsRideActive(false);
 			setModalOpen(false);
 		}
@@ -158,6 +159,9 @@ const NewRidesDriver: FC<IProps> = (props) => {
 	};
 
 	const formatTime = (seconds: number) => {
+		if(seconds < 0){
+			return "expired";
+		}
 		const minutes = Math.floor(seconds / 60);
 		const remainingSeconds = seconds % 60;
 		return `${minutes} minutes and ${remainingSeconds} seconds`;
@@ -185,7 +189,7 @@ const NewRidesDriver: FC<IProps> = (props) => {
 							key={ride.createdAtTimestamp}
 						>
 							<td className={styles.dataCell}>
-								{ride.createdAtTimestamp}
+								{ride.createdAtTimestamp ? (new Date(ride.createdAtTimestamp)).toUTCString() : "N/A"}
 							</td>
 							<td className={styles.dataCell}>
 								{ride.startAddress}
@@ -199,7 +203,7 @@ const NewRidesDriver: FC<IProps> = (props) => {
 							<td className={styles.dataCell}>
 								{ride.driverEmail ? ride.driverEmail : 'N/A'}
 							</td>
-							<td className={styles.dataCell}>{ride.status}</td>
+							<td className={styles.dataCell}>{RideStatus[ride.status]}</td>
 							<td className={styles.dataCell}>{ride.price}</td>
 							<td className={styles.dataCell}>
 								<button

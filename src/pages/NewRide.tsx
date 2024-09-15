@@ -135,12 +135,12 @@ const NewRide: FC<IProps> = (props) => {
 													? prevTime - 1
 													: 0
 											);
-										}, 200); // 0.2 sekunde
+										}, 100); // 0.1 sekunda
 									}
 									return 0;
 								}
 							});
-						}, 200); // 0.2 sekunde
+						}, 100); // 0.1 sekunda
 					}
 				}
 			}, 2000);
@@ -174,6 +174,7 @@ const NewRide: FC<IProps> = (props) => {
 			try {
 				await props.driverService.RateDriver(ratingRequest);
 				toggleModalRating();
+				window.location.reload();
 			} catch (error) {
 				console.error('Failed to accept ride:', error);
 				alert('Failed to accept ride.');
@@ -266,7 +267,7 @@ const NewRide: FC<IProps> = (props) => {
 				<Modal
 					isOpen={isModalOpen}
 					onClose={toggleModal}
-					title='My Modal'
+					title='Enjoy your ride'
 					disabled={isRideActive}
 				>
 					<p>Price: {estimateResponse.priceEstimate}</p>
@@ -307,7 +308,7 @@ const NewRide: FC<IProps> = (props) => {
 				<Modal
 					isOpen={isRatingOpen}
 					onClose={toggleModalRating}
-					title='My Modal'
+					title='Rate ride'
 				>
 					<h2>Leave us your rating for the ride!</h2>
 					<Rating onRate={handleRate} />

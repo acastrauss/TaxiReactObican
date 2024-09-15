@@ -42,8 +42,8 @@ const NewRidesDriver: FC<IProps> = (props) => {
 						<th className={styles.headerCell}>Created At</th>
 						<th className={styles.headerCell}>Start Address</th>
 						<th className={styles.headerCell}>End Address</th>
-						<th className={styles.headerCell}>Client Email</th>
-						<th className={styles.headerCell}>Driver Email</th>
+						<th className={styles.headerCell}>Client</th>
+						<th className={styles.headerCell}>Driver</th>
 						<th className={styles.headerCell}>Status</th>
 						<th className={styles.headerCell}>Price</th>
 					</tr>
@@ -55,7 +55,7 @@ const NewRidesDriver: FC<IProps> = (props) => {
 							key={ride.createdAtTimestamp}
 						>
 							<td className={styles.dataCell}>
-								{ride.createdAtTimestamp}
+								{ride.createdAtTimestamp ? (new Date(ride.createdAtTimestamp)).toUTCString() : "N/A"}
 							</td>
 							<td className={styles.dataCell}>
 								{ride.startAddress}

@@ -105,7 +105,7 @@ const Verification: FC<IProps> = (props) => {
 							<td className={styles.dataCell}>
 								{driver.rating === 0 ? 'N/A' : driver.rating}
 							</td>
-							<td className={styles.dataCell}>{driver.status}</td>
+							<td className={styles.dataCell}>{DriverStatus[driver.status]}</td>
 							<td className={styles.dataCell}>
 								{driver.status ===
 									DriverStatus.NOT_VERIFIED && (
