@@ -108,13 +108,12 @@ const NewRidesDriver: FC<IProps> = (props) => {
 				arrivalTimeRef.current = arrival;
 				rideDurationRef.current = duration;
 				setIsRideActive(true);
-				setModalOpen(true);		
+				setModalOpen(true);
 			}
 			const updatedData = await props.rideService.GetNewRides();
 			if (updatedData) {
 				setRideData(updatedData);
 			}
-
 		} catch (error) {
 			console.error('Failed to accept ride:', error);
 			alert('Failed to accept ride.');
@@ -136,8 +135,17 @@ const NewRidesDriver: FC<IProps> = (props) => {
 					rideDurationRef.current !== null &&
 					rideDurationRef.current > 0
 				) {
-					rideDurationRef.current -= 1;
-					setRideDuration(rideDurationRef.current);
+					setRideDuration((prevDuration) => {
+						if (prevDuration === null) {
+							return 0;
+						}
+						const newDuration = prevDuration - 1;
+						if (newDuration <= 0) {
+							setIsRideActive(false);
+							setModalOpen(false);
+						}
+						return newDuration;
+					});
 				}
 			}, 100);
 		}
@@ -147,20 +155,13 @@ const NewRidesDriver: FC<IProps> = (props) => {
 		};
 	}, [isRideActive]);
 
-	useEffect(() => {
-		if (rideDuration && rideDuration <= 0) {
-			setIsRideActive(false);
-			setModalOpen(false);
-		}
-	}, [rideDuration]);
-
 	const toggleModal = () => {
 		setModalOpen(!isModalOpen);
 	};
 
 	const formatTime = (seconds: number) => {
-		if(seconds < 0){
-			return "expired";
+		if (seconds < 0) {
+			return 'expired';
 		}
 		const minutes = Math.floor(seconds / 60);
 		const remainingSeconds = seconds % 60;
@@ -189,7 +190,11 @@ const NewRidesDriver: FC<IProps> = (props) => {
 							key={ride.createdAtTimestamp}
 						>
 							<td className={styles.dataCell}>
-								{ride.createdAtTimestamp ? (new Date(ride.createdAtTimestamp)).toUTCString() : "N/A"}
+								{ride.createdAtTimestamp
+									? new Date(
+											ride.createdAtTimestamp
+									  ).toUTCString()
+									: 'N/A'}
 							</td>
 							<td className={styles.dataCell}>
 								{ride.startAddress}
@@ -203,7 +208,9 @@ const NewRidesDriver: FC<IProps> = (props) => {
 							<td className={styles.dataCell}>
 								{ride.driverEmail ? ride.driverEmail : 'N/A'}
 							</td>
-							<td className={styles.dataCell}>{RideStatus[ride.status]}</td>
+							<td className={styles.dataCell}>
+								{RideStatus[ride.status]}
+							</td>
 							<td className={styles.dataCell}>{ride.price}</td>
 							<td className={styles.dataCell}>
 								<button

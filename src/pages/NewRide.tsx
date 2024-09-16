@@ -78,6 +78,7 @@ const NewRide: FC<IProps> = (props) => {
 				setNewRideResponse(response?.data || null);
 			}
 		};
+		console.log('kreirana voznja');
 		createNewRide();
 	}, [newRide, props.rideService]);
 
